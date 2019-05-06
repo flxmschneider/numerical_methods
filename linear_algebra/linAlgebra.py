@@ -32,23 +32,6 @@ def cramers_rule(A):
         x[i] = det_of_3x3(A[:,i])/det_of_3x3(A)
 
 
-def excercise_1():
-    A = create_matrix(3)
-    b = list(create_b(3))
-    
-    A_1, A_2, A_3= list(A.T[0,:]),list(A.T[1,:]), list(A.T[2,:])
-    
-    A_b_1 = np.array([b,A_2,A_3]).T
-    A_b_2 = np.array([A_1,b,A_3]).T
-    A_b_3 = np.array([A_1,A_2,b]).T
-    
-    A_i = [A_b_1, A_b_2, A_b_3] 
-    
-    x = [det_of_3x3(a_i)/det_of_3x3(A) for a_i in A_i]
-    print('Result x: ',x)
-    R = np.dot(A,x)-b
-    print('Residual vector R: ',R)
-
 
 def LU_decomposition(M):
     M = np.array(M)
@@ -67,13 +50,59 @@ def LU_decomposition(M):
                 A[i,j] = (M[i,j] - sum([A[i,k]*B[k,j] for k in range(1, j-1)]))/B[j,j]
     return B,A
 
-A = create_matrix(4)
-LU_decomposition(A)
+#A = create_matrix(4)
+#LU_decomposition(A)
+#
+#print('RESULT:')
+#print()
+#import scipy.linalg as sp
+#p, l, u = sp.lu(A)
+#print(u)
+#print()
+#print(l)
 
-print('RESULT:')
-print()
-import scipy.linalg as sp
-p, l, u = sp.lu(A)
-print(u)
-print()
-print(l)
+def solve_lower_triangular(A,b):
+    A, b = np.array(A), np.array(b)
+    N = A.shape[0]
+    y = np.zeros(N)
+    y[0] = b[0]/A[0,0]
+    for i in range(1,N):
+        y[i] = 1/A[i,i]*(b[i] - sum([A[i,j]*y[j] for j in range(2,N)]))
+    return y
+
+
+def solve_upper_triangular(B,y):
+    B, y = np.array(B), np.array(y)
+    N = B.shape[0]
+    x = np.zeros(N)
+    x[N-1] = y[N-1]/B[N-1,N-1]
+    for i in range(N-1,1):
+        x[i] = 1/B[i,i]*(y[i] - sum([B[i,j]*x[j] for j in range(N-1,0)]))
+    return x
+
+def excercise_1():
+    A = create_matrix(3)
+    b = list(create_b(3))
+    
+    A_1, A_2, A_3= list(A.T[0,:]),list(A.T[1,:]), list(A.T[2,:])
+    
+    A_b_1 = np.array([b,A_2,A_3]).T
+    A_b_2 = np.array([A_1,b,A_3]).T
+    A_b_3 = np.array([A_1,A_2,b]).T
+    
+    A_i = [A_b_1, A_b_2, A_b_3] 
+    
+    x = [det_of_3x3(a_i)/det_of_3x3(A) for a_i in A_i]
+    print('Result x: ',x)
+    R = np.dot(A,x)-b
+    print('Residual vector R: ',R)
+
+def exercise_2():
+    A = create_matrix(10)
+    b = create_b(10)
+    L, U  = LU_decomposition(A)
+    y = solve_lower_triangular(L, b)
+    x = solve_upper_triangular(U, y)
+    print('Result x: ',x)
+    R = np.dot(A,x)-b
+    print('Residual vector R: ',R)
