@@ -31,18 +31,49 @@ def cramers_rule(A):
     for i in range(3):
         x[i] = det_of_3x3(A[:,i])/det_of_3x3(A)
 
-A = create_matrix(3)
-b = list(create_b(3))
 
-A_1, A_2, A_3= list(A.T[0,:]),list(A.T[1,:]), list(A.T[2,:])
+def excercise_1():
+    A = create_matrix(3)
+    b = list(create_b(3))
+    
+    A_1, A_2, A_3= list(A.T[0,:]),list(A.T[1,:]), list(A.T[2,:])
+    
+    A_b_1 = np.array([b,A_2,A_3]).T
+    A_b_2 = np.array([A_1,b,A_3]).T
+    A_b_3 = np.array([A_1,A_2,b]).T
+    
+    A_i = [A_b_1, A_b_2, A_b_3] 
+    
+    x = [det_of_3x3(a_i)/det_of_3x3(A) for a_i in A_i]
+    print('Result x: ',x)
+    R = np.dot(A,x)-b
+    print('Residual vector R: ',R)
 
-A_b_1 = np.array([b,A_2,A_3]).T
-A_b_2 = np.array([A_1,b,A_3]).T
-A_b_3 = np.array([A_1,A_2,b]).T
 
-A_i = [A_b_1, A_b_2, A_b_3] 
+def LU_decomposition(M):
+    M = np.array(M)
+    B = np.zeros(M.shape)
+    A = np.zeros(M.shape)
+    for j in range(B.shape[0]):
+        for i in range(B.shape[0]):
+            if i == j:
+                B[i,j] = M[i,j]
+                A[i,j] = 1
+            elif i == 1:
+                B[1,j] = M[1,j]
+            elif i <= j:
+                B[i,j] = M[i,j] - sum([A[i,k]*B[k,j] for k in range(1, j-1)])
+            elif i > j:
+                A[i,j] = (M[i,j] - sum([A[i,k]*B[k,j] for k in range(1, j-1)]))/B[j,j]
+    return B,A
 
-x = [det_of_3x3(a_i)/det_of_3x3(A) for a_i in A_i]
-print('Result x: ',x)
-R = np.dot(A,x)-b
-print('Residual vector R: ',R)
+A = create_matrix(4)
+LU_decomposition(A)
+
+print('RESULT:')
+print()
+import scipy.linalg as sp
+p, l, u = sp.lu(A)
+print(u)
+print()
+print(l)
