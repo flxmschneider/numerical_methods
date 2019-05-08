@@ -30,8 +30,7 @@ def cramers_rule(A):
     x = np.zeros(3)
     for i in range(3):
         x[i] = det_of_3x3(A[:,i])/det_of_3x3(A)
-
-
+    return x
 
 def LU_decomposition(M):
     M = np.array(M)
@@ -49,17 +48,6 @@ def LU_decomposition(M):
             elif i > j:
                 A[i,j] = (M[i,j] - sum([A[i,k]*B[k,j] for k in range(1, j-1)]))/B[j,j]
     return B,A
-
-#A = create_matrix(4)
-#LU_decomposition(A)
-#
-#print('RESULT:')
-#print()
-#import scipy.linalg as sp
-#p, l, u = sp.lu(A)
-#print(u)
-#print()
-#print(l)
 
 def solve_lower_triangular(A,b):
     A, b = np.array(A), np.array(b)
@@ -80,7 +68,7 @@ def solve_upper_triangular(B,y):
         x[i] = 1/B[i,i]*(y[i] - sum([B[i,j]*x[j] for j in range(N-1,0)]))
     return x
 
-def excercise_1():
+def exercise_1():
     A = create_matrix(3)
     b = list(create_b(3))
     
@@ -106,3 +94,11 @@ def exercise_2():
     print('Result x: ',x)
     R = np.dot(A,x)-b
     print('Residual vector R: ',R)
+
+def main():
+    print('Exercise 1:\n')
+    exercise_1()
+    print('\nExercise 2:\n')
+    exercise_2()
+
+main()
