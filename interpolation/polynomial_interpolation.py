@@ -19,6 +19,8 @@ def neville(data_x, data_y,x):
                 p[i] = ((x - data_x[i+k])*p[i] + (data_x[i]-x)*p[i+1])/(data_x[i]-data_x[i+k])
     return p[0]
 
+
+print('Exercise 1:')
 y_data = evaluate_y()
 x_data = np.linspace(-10, 10, 100)
 
@@ -30,11 +32,47 @@ print('Linear interpolation:',lin_interpolation)
 print('Error: ', y(-5) - lin_interpolation)
 
 quadratic_interpolation = neville(x_data[24:27], y_data[24:27], -5)
-print('Value at position y(-5)=',y(-5))
 print('Quadratic interpolation:',quadratic_interpolation)
 print('Error: ', y(-5) - quadratic_interpolation)
 
 qubic_interpolation = neville(x_data[24:28], y_data[24:28], -5)
-print('Value at position y(-5)=',y(-5))
 print('Linear interpolation:',qubic_interpolation)
 print('Error: ', y(-5) -qubic_interpolation)
+
+
+print()
+lin_interpolation = neville(x_data[74:76], y_lin, 5)
+print('Value at position y(5)=',y(5))
+print('Linear interpolation:',lin_interpolation)
+print('Error: ', y(5) - lin_interpolation)
+
+quadratic_interpolation = neville(x_data[74:77], y_data[74:77], 5)
+print('Quadratic interpolation:',quadratic_interpolation)
+print('Error: ', y(5) - quadratic_interpolation)
+
+qubic_interpolation = neville(x_data[74:78], y_data[74:78], 5)
+print('Qubic interpolation:',qubic_interpolation)
+print('Error: ', y(5) -qubic_interpolation)
+
+
+print('Exercise 2:')
+
+def y_2(x):
+    return np.cos(2*np.pi*8/64*x)+0.5*np.cos(2*np.pi*24/64*x)-0.5*np.cos(2*np.pi*(8/3)/64*x)
+x_data = np.linspace(0,20,100)
+y_data = [y_2(i) for i in x_data]
+lin_interpolation = neville(x_data[59:61], y_data[59:61], 12)
+print('Value at position y(12)=',y_2(12))
+print('Linear interpolation:',lin_interpolation)
+print('Error: ', y_2(12) - lin_interpolation)
+
+quadratic_interpolation = neville(x_data[59:62], y_data[59:62], 12)
+print('Quadratic interpolation:',quadratic_interpolation)
+print('Error: ', y(12) - quadratic_interpolation)
+
+qubic_interpolation = neville(x_data[59:63], y_data[59:63], 12)
+print('Qubic interpolation:',qubic_interpolation)
+print('Error: ', y(12) -qubic_interpolation)
+
+
+
