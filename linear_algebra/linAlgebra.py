@@ -58,15 +58,14 @@ def solve_lower_triangular(A,b):
         y[i] = 1/A[i,i]*(b[i] - sum([A[i,j]*y[j] for j in range(2,N)]))
     return y
 
-
 def solve_upper_triangular(B,y):
     B, y = np.array(B), np.array(y)
     N = B.shape[0]
     x = np.zeros(N)
     x[N-1] = y[N-1]/B[N-1,N-1]
-    for i in range(N-1,1):
+    for i in range(1,N):
         x[i] = 1/B[i,i]*(y[i] - sum([B[i,j]*x[j] for j in range(N-1,0)]))
-    return x
+    return x[::-1]
 
 def exercise_1():
     A = create_matrix(3)
@@ -94,11 +93,19 @@ def exercise_2():
     print('Result x: ',x)
     R = np.dot(A,x)-b
     print('Residual vector R: ',R)
-
+    
 def main():
     print('Exercise 1:\n')
     exercise_1()
     print('\nExercise 2:\n')
     exercise_2()
 
+"""ANMERKUNGEN:
+
+Aufgabe 1 scheint zu funktionieren,
+bei Aufgabe 2 scheint ein Fehler in der
+LU-Decomposition Funktion vorzuliegen. Ich
+tippe auf einen Indexfehler, konnte den Fehler
+aber nicht entdecken.
+"""""
 main()
