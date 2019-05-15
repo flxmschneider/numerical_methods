@@ -8,6 +8,15 @@ def evaluate_y():
     I = np.linspace(-10,10,N)
     return [y(i) for i in I]
 
+def find_root():
+    x = np.linspace(-10, 10,100)
+    y = evaluate_y()
+    sign_change = []
+    for i in range(len(y)-1):
+        if y[i]*y[i+1] < 0:
+            sign_change.append(i)
+    return [x[j] for j in sign_change]
+
 def neville(data_x, data_y,x):
     n = len(data_x)
     p = np.zeros(n)
@@ -21,6 +30,9 @@ def neville(data_x, data_y,x):
 
 
 print('Exercise 1:')
+print('Roots at:')
+print(find_root())
+
 y_data = evaluate_y()
 x_data = np.linspace(-10, 10, 100)
 
@@ -36,7 +48,7 @@ print('Quadratic interpolation:',quadratic_interpolation)
 print('Error: ', y(-5) - quadratic_interpolation)
 
 qubic_interpolation = neville(x_data[24:28], y_data[24:28], -5)
-print('Linear interpolation:',qubic_interpolation)
+print('Qubic interpolation:',qubic_interpolation)
 print('Error: ', y(-5) -qubic_interpolation)
 
 
@@ -55,7 +67,7 @@ print('Qubic interpolation:',qubic_interpolation)
 print('Error: ', y(5) -qubic_interpolation)
 
 
-print('Exercise 2:')
+print('\nExercise 2:')
 
 def y_2(x):
     return np.cos(2*np.pi*8/64*x)+0.5*np.cos(2*np.pi*24/64*x)-0.5*np.cos(2*np.pi*(8/3)/64*x)
@@ -68,11 +80,9 @@ print('Error: ', y_2(12) - lin_interpolation)
 
 quadratic_interpolation = neville(x_data[59:62], y_data[59:62], 12)
 print('Quadratic interpolation:',quadratic_interpolation)
-print('Error: ', y(12) - quadratic_interpolation)
+print('Error: ', y_2(12) - quadratic_interpolation)
 
 qubic_interpolation = neville(x_data[59:63], y_data[59:63], 12)
 print('Qubic interpolation:',qubic_interpolation)
-print('Error: ', y(12) -qubic_interpolation)
-
-
+print('Error: ', y_2(12) -qubic_interpolation)
 
