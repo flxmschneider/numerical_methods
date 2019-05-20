@@ -56,7 +56,6 @@ def natural_spline(x, y):
     print(u)
     return z 
 
-
 print('Roots at:')
 print(find_root())
 
