@@ -38,6 +38,8 @@ print(simpson(I_1, 0, 0.5*np.pi, 100))
 print(extended_formula2(I_1, 0, 0.5*np.pi, 100))
 print(extended_formula1(I_1, 0, 0.5*np.pi, 100))
 
+
+
 trapez_list = []
 simpson_list = []
 N_list = np.linspace(1, 21,5)
@@ -51,3 +53,9 @@ plt.plot(N_list, simpson_list, label='Simpson')
 plt.legend()
 plt.title('Comparison of Simpsons and Trapezoidal Formula')
 plt.show()
+
+''' Trapez und Simpson Regel wurde implementiert sowie miteinander
+graphisch verglichen. 
+Die beiden extended Formeln wurden implementiert und die Funktionsweise getestet.
+
+'''
