@@ -2,9 +2,11 @@ import numpy as np
 import random
 import matplotlib.pyplot as plt
 
+# Funktion 1
 def f(x):
     return (1+x**2)**-1
 
+#Funktion 2
 def f(y):
     return 3/(4+4*y**2-2*y-2*y**3)
 
@@ -35,3 +37,10 @@ ax[1].set_title('Variances')
 ax[1].plot(N_list, variances)
 plt.tight_layout()
 plt.show()
+
+
+""""
+Nutzt man Funktion 1, so konvergiert die Ergebnisse für große N gegen
+das zu erwartende Resultat, allerdings mit deutlich hoher Varianz. Dies
+kann mithilfe von Funktion 2 deutlich verbessert werden.
+"""
